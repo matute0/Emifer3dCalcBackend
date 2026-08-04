@@ -31,6 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-/src/main/java/matuteferr/emifer3dcalc/.env
 
 .env
