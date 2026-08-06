@@ -25,4 +25,8 @@ public class FilamentController {
     public ResponseEntity<List<GETFilamentDTO>> getForStatus(@RequestParam boolean status){
         return ResponseEntity.ok(filamentService.getForStatus(status));
     }
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestBody FilamentDTO filamentDTO){
+        return ResponseEntity.ok(filamentService.delete(filamentDTO));
+    }
 }
