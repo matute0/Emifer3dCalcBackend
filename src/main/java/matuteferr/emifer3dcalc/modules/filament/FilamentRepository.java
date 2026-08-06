@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FilamentRepository extends MongoRepository<Filament, String> {
+    boolean existsByColourAndTypeAndManufacturer(String colour, String type, String manufacturer);
 }

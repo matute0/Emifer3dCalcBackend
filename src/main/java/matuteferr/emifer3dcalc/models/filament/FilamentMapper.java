@@ -1,6 +1,6 @@
-package matuteferr.emifer3dcalc.models.filament.dtos;
+package matuteferr.emifer3dcalc.models.filament;
 
-import matuteferr.emifer3dcalc.models.filament.Filament;
+import matuteferr.emifer3dcalc.models.filament.dtos.FilamentDTO;
 import org.springframework.stereotype.Component;
 
 @Component
