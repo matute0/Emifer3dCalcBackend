@@ -25,8 +25,16 @@ public class FilamentController {
     public ResponseEntity<List<GETFilamentDTO>> getForStatus(@RequestParam boolean status){
         return ResponseEntity.ok(filamentService.getForStatus(status));
     }
+    @GetMapping("/getID")
+    public ResponseEntity<String> getID(@RequestParam String colour, @RequestParam String type, @RequestParam String manufacturer){
+        return ResponseEntity.ok(filamentService.getID(colour, type, manufacturer));
+    }
     @DeleteMapping("/delete")
     public ResponseEntity<String> delete(@RequestBody FilamentDTO filamentDTO){
         return ResponseEntity.ok(filamentService.delete(filamentDTO));
+    }
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<String> update(@RequestBody FilamentDTO filamentDTO, @PathVariable String id){
+        return ResponseEntity.ok(filamentService.update(id, filamentDTO));
     }
 }
