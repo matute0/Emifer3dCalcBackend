@@ -16,4 +16,5 @@ public class Filament {
     private String colour;
     private String type;
     private String manufacturer;
+    private boolean status;
 }
