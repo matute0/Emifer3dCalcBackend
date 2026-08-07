@@ -13,28 +13,28 @@ public class FilamentValidations {
     @Autowired
     private FilamentRepository filamentRepository;
 
-    public boolean validateColour(String colour){
+    private boolean validateColour(String colour){
         return colour.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+$");
     }
-    public boolean validateType(String type){
+    private boolean validateType(String type){
         return type.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\\s+-]+$");
     }
-    public boolean validateManufacturer(String manufacturer){
+    private boolean validateManufacturer(String manufacturer){
         return manufacturer.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\\s.\\-&]+$");
     }
 
-    public boolean validateAlreadyExists(Filament filament){
+    private boolean validateAlreadyExists(Filament filament){
         return filamentRepository.existsByColourAndTypeAndManufacturer(filament.getColour(), filament.getType(), filament.getManufacturer());
     }
 
     public void validate(Filament filament){
-        if(!validateColour(filament.getColour()) || filament.getColour() == null || filament.getColour().trim().isEmpty()){
+        if(!validateColour(filament.getColour()) || filament.getColour().trim().isEmpty()){
             throw new ColourFormatException();
         }
-        if(!validateType(filament.getType()) || filament.getType() == null || filament.getType().trim().isEmpty()){
+        if(!validateType(filament.getType()) || filament.getType().trim().isEmpty()){
             throw new TypeFormatException();
         }
-        if(!validateManufacturer(filament.getManufacturer()) || filament.getManufacturer() == null || filament.getManufacturer().trim().isEmpty()){
+        if(!validateManufacturer(filament.getManufacturer()) || filament.getManufacturer().trim().isEmpty()){
             throw new ManufacturerFormatException();
         }
         if(validateAlreadyExists(filament)){
