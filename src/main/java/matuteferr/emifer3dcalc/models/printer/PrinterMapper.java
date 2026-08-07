@@ -24,6 +24,7 @@ public class PrinterMapper {
                 .available(printer.isAvailable())
                 .multiColour(printer.isMultiColour())
                 .nozzles(printer.getNozzles())
+                .watts(printer.getWatts())
                 .wearCost(printer.getWearCost())
                 .build();
     }
