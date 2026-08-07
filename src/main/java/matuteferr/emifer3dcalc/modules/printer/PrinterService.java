@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PrinterService {
@@ -48,5 +49,20 @@ public class PrinterService {
         printer.setAvailable(false);
         printerRepository.save(printer);
         return "Printer unavailable";
+    }
+    public String update(POSTPrinterDTO printerDTO, String id){
+        printerValidations.validation(printerDTO);
+        Optional<Printer> printer = printerRepository.findById(id);
+        if(printer.isEmpty()){
+            throw new PrinterNotFoundException();
+        }
+        printer.get().setName(printerDTO.getName());
+        printer.get().setNozzles(printerDTO.getNozzles());
+        printer.get().setManufacturer(printerDTO.getManufacturer());
+        printer.get().setWatts(printerDTO.getWatts());
+        printer.get().setWearCost(printerDTO.getWearCost());
+        printer.get().setMultiColour(printerDTO.isMultiColour());
+        printerRepository.save(printer.get());
+        return "Printer updated";
     }
 }

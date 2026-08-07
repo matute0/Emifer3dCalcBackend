@@ -38,4 +38,8 @@ public class PrinterController {
     public ResponseEntity<String> unavailable(@RequestParam String id){
         return ResponseEntity.ok(printerService.unavailable(id));
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> update(@PathVariable String id, @RequestBody POSTPrinterDTO printerDTO){
+        return ResponseEntity.ok(printerService.update(printerDTO, id));
+    }
 }
