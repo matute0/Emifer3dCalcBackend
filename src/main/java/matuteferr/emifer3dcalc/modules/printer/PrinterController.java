@@ -30,5 +30,12 @@ public class PrinterController {
     public ResponseEntity<GETPrinterDTO> getByID(@PathVariable String id){
         return ResponseEntity.ok(printerService.getByID(id));
     }
-
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam String id){
+        return ResponseEntity.ok(printerService.delete(id));
+    }
+    @PatchMapping("/unavailable")
+    public ResponseEntity<String> unavailable(@RequestParam String id){
+        return ResponseEntity.ok(printerService.unavailable(id));
+    }
 }

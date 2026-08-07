@@ -38,4 +38,15 @@ public class PrinterService {
         }
         return printerDTO;
     }
+    public String delete(String id){
+        Printer printer = printerRepository.findById(id).get();
+        printerRepository.delete(printer);
+        return "Printer deleted";
+    }
+    public String unavailable(String id){
+        Printer printer = printerRepository.findById(id).get();
+        printer.setAvailable(false);
+        printerRepository.save(printer);
+        return "Printer unavailable";
+    }
 }
