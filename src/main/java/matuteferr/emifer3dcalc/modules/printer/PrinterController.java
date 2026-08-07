@@ -2,6 +2,7 @@ package matuteferr.emifer3dcalc.modules.printer;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterDTO;
 import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterListDTO;
 import matuteferr.emifer3dcalc.models.printer.dtos.POSTPrinterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class PrinterController {
     public ResponseEntity<List<GETPrinterListDTO>> list(@RequestParam boolean available){
         return ResponseEntity.ok(printerService.list(available));
     }
-
+    @GetMapping("/get/{id}")
+    public ResponseEntity<GETPrinterDTO> getByID(@PathVariable String id){
+        return ResponseEntity.ok(printerService.getByID(id));
+    }
 
 }
