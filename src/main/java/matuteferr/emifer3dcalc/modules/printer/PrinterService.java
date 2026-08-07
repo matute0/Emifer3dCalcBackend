@@ -2,9 +2,13 @@ package matuteferr.emifer3dcalc.modules.printer;
 
 import matuteferr.emifer3dcalc.models.printer.Printer;
 import matuteferr.emifer3dcalc.models.printer.PrinterMapper;
+import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterListDTO;
 import matuteferr.emifer3dcalc.models.printer.dtos.POSTPrinterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PrinterService {
@@ -21,5 +25,8 @@ public class PrinterService {
         printer.setAvailable(true);
         printerRepository.save(printer);
         return "Printer registered";
+    }
+    public List<GETPrinterListDTO> list(boolean available){
+        return printerRepository.findByAvailable(available);
     }
 }

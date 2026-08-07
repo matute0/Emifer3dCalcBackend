@@ -2,13 +2,13 @@ package matuteferr.emifer3dcalc.modules.printer;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterListDTO;
 import matuteferr.emifer3dcalc.models.printer.dtos.POSTPrinterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/printer")
@@ -20,6 +20,10 @@ public class PrinterController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody POSTPrinterDTO printerDTO){
         return ResponseEntity.ok(printerService.register(printerDTO));
+    }
+    @GetMapping("/list")
+    public ResponseEntity<List<GETPrinterListDTO>> list(@RequestParam boolean available){
+        return ResponseEntity.ok(printerService.list(available));
     }
 
 
