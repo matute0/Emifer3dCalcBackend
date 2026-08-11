@@ -73,7 +73,14 @@ public class SecurityConfig {
                         "/user/login"
                         ).permitAll()
                                 .requestMatchers("/api/public/**").permitAll()
-                                .requestMatchers("/user/logout").authenticated()
+                                .requestMatchers("/user/logout",
+                                        "/filament/register",
+                                        "/filament/update/",
+                                        "/filament/delete",
+                                        "/printer/register",
+                                        "/printer/delete",
+                                        "/printer/unavailable",
+                                        "/printer/update/").authenticated()
                         ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
