@@ -6,6 +6,7 @@ import matuteferr.emifer3dcalc.models.filament.dtos.FilamentDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.GETFilamentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class FilamentController {
             description = "Creates and stores a new filament record in the system using the data provided in the request body."
     )
     @PostMapping("/register")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> register(@RequestBody FilamentDTO filamentDTO){
         return ResponseEntity.ok(filamentService.register(filamentDTO));
     }
@@ -46,6 +48,7 @@ public class FilamentController {
             description = "Permanently removes or disables a filament from the system based on the specified parameters or identifier."
     )
     @DeleteMapping("/delete")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> delete(@RequestBody FilamentDTO filamentDTO){
         return ResponseEntity.ok(filamentService.delete(filamentDTO));
     }
@@ -54,6 +57,7 @@ public class FilamentController {
             description = "Modifies one or more specific fields of an existing filament identified by its unique ID."
     )
     @PatchMapping("/update/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> update(@RequestBody FilamentDTO filamentDTO, @PathVariable String id){
         return ResponseEntity.ok(filamentService.update(id, filamentDTO));
     }

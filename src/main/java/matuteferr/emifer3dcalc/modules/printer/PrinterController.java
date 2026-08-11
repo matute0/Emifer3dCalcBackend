@@ -8,6 +8,7 @@ import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterListDTO;
 import matuteferr.emifer3dcalc.models.printer.dtos.POSTPrinterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class PrinterController {
             description = "Adds a new 3D printer to the system catalog along with its specifications."
     )
     @PostMapping("/register")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> register(@Valid @RequestBody POSTPrinterDTO printerDTO){
         return ResponseEntity.ok(printerService.register(printerDTO));
     }
@@ -47,6 +49,7 @@ public class PrinterController {
             description = "Permanently removes a 3D printer from the system."
     )
     @DeleteMapping("/delete")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> delete(@RequestParam String id){
         return ResponseEntity.ok(printerService.delete(id));
     }
@@ -55,6 +58,7 @@ public class PrinterController {
             description = "Updates the status of a 3D printer to indicate it is currently out of service or unavailable."
     )
     @PatchMapping("/unavailable")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> unavailable(@RequestParam String id){
         return ResponseEntity.ok(printerService.unavailable(id));
     }
@@ -63,6 +67,7 @@ public class PrinterController {
             description = "Updates the details of a specific 3D printer by its unique ID."
     )
     @PutMapping("/update/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> update(@PathVariable String id, @RequestBody POSTPrinterDTO printerDTO){
         return ResponseEntity.ok(printerService.update(printerDTO, id));
     }
