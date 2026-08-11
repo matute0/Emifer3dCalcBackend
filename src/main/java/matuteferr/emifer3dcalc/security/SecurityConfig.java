@@ -73,6 +73,7 @@ public class SecurityConfig {
                         "/user/login"
                         ).permitAll()
                                 .requestMatchers("/api/public/**").permitAll()
+                                .requestMatchers("/user/logout").authenticated()
                         ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );

@@ -1,6 +1,7 @@
 package matuteferr.emifer3dcalc.modules.user;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import matuteferr.emifer3dcalc.models.user.User;
@@ -51,5 +52,15 @@ public class UserService {
         response.addCookie(cookie);
 
         return "Login Successfully";
+    }
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        Cookie deleteCookie = new Cookie("jwt", null);
+        deleteCookie.setHttpOnly(true);
+        deleteCookie.setSecure(true);
+        deleteCookie.setPath("/");
+        deleteCookie.setMaxAge(0);
+        response.addCookie(deleteCookie);
+        jwtTokenUtil.logout(request);
+        return "Logged out";
     }
 }

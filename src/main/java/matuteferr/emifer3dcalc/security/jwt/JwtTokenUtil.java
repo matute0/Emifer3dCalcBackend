@@ -3,6 +3,8 @@ package matuteferr.emifer3dcalc.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import matuteferr.emifer3dcalc.models.user.UserMapper;
 import matuteferr.emifer3dcalc.modules.user.UserRepository;
@@ -52,6 +54,16 @@ public class JwtTokenUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + (24*60*60)*1000))
                 .signWith(secretKey)
                 .compact();
+    }
+    public void logout(HttpServletRequest request){
+        if(request.getCookies() != null){
+            for (Cookie cookie: request.getCookies()){
+                if("jwt".equals(cookie.getName())){
+                    blackList.add(cookie.getValue());
+                    cookie.setMaxAge(0);
+                }
+            }
+        }
     }
     public boolean validateToken(String token, UserDetails userDetails){
         final String username = extractUsername(token);
