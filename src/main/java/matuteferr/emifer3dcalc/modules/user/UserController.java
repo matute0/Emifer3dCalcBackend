@@ -8,19 +8,28 @@ import matuteferr.emifer3dcalc.models.user.dtos.POSTLoginDTO;
 import matuteferr.emifer3dcalc.models.user.dtos.POSTUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-@Tag(name = "User", description = "User Managment")
+@Tag(name = "User", description = "Endpoints for user login, session management, and logout operations.")
 public class UserController {
     @Autowired
     private UserService userService;
-
+    @Operation(
+            summary = "User Login",
+            description = "Authenticates user credentials and sets an HTTP-only JWT cookie upon successful login."
+    )
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody POSTLoginDTO postLoginDTO, HttpServletResponse response){
         return ResponseEntity.ok(userService.login(postLoginDTO, response));
     }
+    @Operation(
+            summary = "User Logout",
+            description = "Clears the JWT cookie from the client and terminates the current user session."
+    )
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response){
         return ResponseEntity.ok(userService.logout(request, response));
