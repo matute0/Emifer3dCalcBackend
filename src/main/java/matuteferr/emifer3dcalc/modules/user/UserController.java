@@ -34,5 +34,9 @@ public class UserController {
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response){
         return ResponseEntity.ok(userService.logout(request, response));
     }
+    @PatchMapping("/validate")
+    public ResponseEntity<Boolean> validate(HttpServletRequest request){
+        return ResponseEntity.ok(userService.validate(request));
+    }
 
 }
