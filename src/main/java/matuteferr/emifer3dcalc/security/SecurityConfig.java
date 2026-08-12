@@ -81,7 +81,8 @@ public class SecurityConfig {
                                         "/printer/register",
                                         "/printer/delete",
                                         "/printer/unavailable",
-                                        "/printer/update/").authenticated()
+                                        "/printer/update/",
+                                        "/user/get").authenticated()
                         ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );

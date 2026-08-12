@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import matuteferr.emifer3dcalc.models.user.User;
 import matuteferr.emifer3dcalc.models.user.UserMapper;
+import matuteferr.emifer3dcalc.models.user.dtos.GetUserDTO;
 import matuteferr.emifer3dcalc.models.user.dtos.POSTLoginDTO;
 import matuteferr.emifer3dcalc.models.user.dtos.POSTUserDTO;
 import matuteferr.emifer3dcalc.security.jwt.CustomUserDetailsService;
@@ -20,17 +21,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserService {
     private final AuthenticationManager authenticationManager;
     private final CustomUserDetailsService userDetailsService;
     private final JwtTokenUtil jwtTokenUtil;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserService(AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
+    public UserService(AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil, UserRepository userRepository, UserMapper userMapper) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Value("${is.production}")
@@ -72,5 +78,18 @@ public class UserService {
             }
         }
         return false;
+    }
+    public GetUserDTO getUserAuth(HttpServletRequest request){
+        if(request.getCookies() != null){
+            for(Cookie cookie : request.getCookies()){
+                if(cookie.getName().equals("jwt")){
+                    if(validate(request)){
+                        Optional<User> user = userRepository.findByUsername(jwtTokenUtil.extractUsername(cookie.getValue()));
+                        return userMapper.UserToGet(user.get());
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
