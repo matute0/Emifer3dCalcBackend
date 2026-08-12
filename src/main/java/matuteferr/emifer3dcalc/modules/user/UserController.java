@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import matuteferr.emifer3dcalc.models.user.dtos.GetUserDTO;
 import matuteferr.emifer3dcalc.models.user.dtos.POSTLoginDTO;
 import matuteferr.emifer3dcalc.models.user.dtos.POSTUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,21 @@ public class UserController {
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response){
         return ResponseEntity.ok(userService.logout(request, response));
     }
-    @PatchMapping("/validate")
+    @Operation(
+            summary = "Validate active session",
+            description = "Verifies whether the session cookie or token provided in the request is valid and active."
+    )
+    @GetMapping("/validate")
     public ResponseEntity<Boolean> validate(HttpServletRequest request){
         return ResponseEntity.ok(userService.validate(request));
+    }
+    @Operation(
+            summary = "Get authenticated user details",
+            description = "Retrieves the profile DTO containing information for the currently authenticated user based on the request session."
+    )
+    @GetMapping("/get")
+    public ResponseEntity<GetUserDTO> getUser(HttpServletRequest request){
+        return ResponseEntity.ok(userService.getUserAuth(request));
     }
 
 }
