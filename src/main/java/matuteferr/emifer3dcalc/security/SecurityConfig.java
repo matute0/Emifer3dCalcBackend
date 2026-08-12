@@ -70,7 +70,8 @@ public class SecurityConfig {
                         "/swagger-ui.html",
                         "/swagger-resources/**",
                         "/webjars/**",
-                        "/user/login"
+                        "/user/login",
+                        "/user/validate"
                         ).permitAll()
                                 .requestMatchers("/api/public/**").permitAll()
                                 .requestMatchers("/user/logout",

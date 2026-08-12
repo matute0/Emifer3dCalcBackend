@@ -63,4 +63,14 @@ public class UserService {
         jwtTokenUtil.logout(request);
         return "Logged out";
     }
+    public boolean validate(HttpServletRequest request){
+        if(request.getCookies() != null){
+            for(Cookie cookie : request.getCookies()){
+                if(cookie.getName().equals("jwt")){
+                    return jwtTokenUtil.validateToken(cookie.getValue(), userDetailsService.loadUserByUsername(jwtTokenUtil.extractUsername(cookie.getValue()))) || !jwtTokenUtil.getBlackList().contains(cookie.getValue());
+                }
+            }
+        }
+        return false;
+    }
 }
