@@ -71,7 +71,10 @@ public class SecurityConfig {
                         "/swagger-resources/**",
                         "/webjars/**",
                         "/user/login",
-                        "/user/validate"
+                        "/user/validate",
+                        "/cost/calculate",
+                        "/filament/get",
+                        "/printer/list"
                         ).permitAll()
                                 .requestMatchers("/api/public/**").permitAll()
                                 .requestMatchers("/user/logout",

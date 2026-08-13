@@ -1,0 +1,23 @@
+package matuteferr.emifer3dcalc.models.cost;
+
+import matuteferr.emifer3dcalc.models.cost.dtos.GETOnlyCostDTO;
+import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostDTO;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+
+@Component
+public class CostMapper {
+    public Cost POSTToCost(POSTCostDTO costDTO){
+        return Cost.builder()
+                .printTime(Duration.ofHours(costDTO.getHours()).plusMinutes(costDTO.getMinutes()))
+                .filamentAMList(costDTO.getFilamentAMList())
+                .printerID(costDTO.getPrinterID())
+                .build();
+    }
+    public GETOnlyCostDTO CostToGet(Cost cost){
+        return GETOnlyCostDTO.builder()
+                .finalCost(cost.getFinalCost())
+                .build();
+    }
+}

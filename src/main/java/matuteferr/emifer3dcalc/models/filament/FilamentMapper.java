@@ -22,6 +22,7 @@ public class FilamentMapper {
     }
     public GETFilamentDTO filamentToGet(Filament filament){
         return GETFilamentDTO.builder()
+                .id(filament.getId())
                 .status(filament.isStatus())
                 .colour(filament.getColour())
                 .manufacturer(filament.getManufacturer())
