@@ -1,6 +1,7 @@
 package matuteferr.emifer3dcalc.models.cost;
 
 import matuteferr.emifer3dcalc.models.cost.dtos.GETOnlyCostDTO;
+import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostConfigDTO;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostDTO;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,12 @@ public class CostMapper {
     public GETOnlyCostDTO CostToGet(Cost cost){
         return GETOnlyCostDTO.builder()
                 .finalCost(cost.getFinalCost())
+                .build();
+    }
+    public POSTCostConfigDTO costToDTO(CostConfig config){
+        return POSTCostConfigDTO.builder()
+                .khwCost(config.getKwhCost())
+                .profitPercentage(config.getProfitPercentage())
                 .build();
     }
 }
