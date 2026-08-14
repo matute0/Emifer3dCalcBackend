@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.List;
 
 @Service
 public class CostService {
@@ -33,19 +34,37 @@ public class CostService {
         GETPrinterDTO printer = printerService.getByID(postCostDTO.getPrinterID());
         Cost cost = costMapper.POSTToCost(postCostDTO);
         POSTCostConfigDTO config = costMapper.costToDTO(costConfigRepository.findAll().get(0));
-        for(FilamentAmountDTO filamentAmountDTO : postCostDTO.getFilamentAMList()){
-            GETFilamentDTO filament = filamentService.getByID(filamentAmountDTO.getFilamentID());
-            // hacer llamado a la api de mercado libre
-            double filamentCost = ((double) filamentAmountDTO.getAmount() /1000)*600;
-            cost.setFinalCost(cost.getFinalCost() + ((int) Math.round(filamentCost)));
-        }
-        cost.setFinalCost((int)((cost.getFinalCost() + printerCost(printer, cost.getPrintTime()))*((100 + config.getProfitPercentage())/100)));
+        cost.setFinalCost(cost.getFinalCost()
+                + filamentCost(postCostDTO.getFilamentAMList())
+                + printerCost(printer, cost.getPrintTime())
+                + additionalCost(postCostDTO));
+
+        cost.setFinalCost(cost.getFinalCost()*((100 + config.getProfitPercentage())/100));
+
         costRepository.save(cost);
         return costMapper.CostToGet(cost);
+    }
+    public int filamentCost(List<FilamentAmountDTO> filamentAmountDTOList){
+        int price = 0;
+        for(FilamentAmountDTO filamentAM: filamentAmountDTOList){
+            GETFilamentDTO filament = filamentService.getByID(filamentAM.getFilamentID());
+            // hacer llamado a la api de mercado libre
+            double filamentCost = ((double) filamentAM.getAmount() /1000)*600;
+            price += ((int) Math.round(filamentCost));
+        }
+
+        return price;
     }
     public int printerCost(GETPrinterDTO printer, Duration duration){
         double totalHoursDecimal = duration.toMinutes() / 60.0;
         return (int) Math.round((((double) printer.getWatts() /1000)*totalHoursDecimal* getConfig().getKhwCost())+(((double) printer.getWearCost() /100) * totalHoursDecimal));
+    }
+    public int additionalCost(POSTCostDTO postCostDTO){
+        int price = 0;
+        for(Integer cost: postCostDTO.getAdditonalCosts()){
+            price += cost;
+        }
+        return price;
     }
     public POSTCostConfigDTO getConfig(){
         return costMapper.costToDTO(costConfigRepository.findAll().get(0));

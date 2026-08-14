@@ -19,5 +19,6 @@ public class Cost {
     private String printerID;
     private List<FilamentAmountDTO> filamentAMList;
     private Duration printTime;
+    private List<Integer> additionalCosts;
     private int finalCost;
 }

@@ -14,6 +14,7 @@ public class CostMapper {
                 .printTime(Duration.ofHours(costDTO.getHours()).plusMinutes(costDTO.getMinutes()))
                 .filamentAMList(costDTO.getFilamentAMList())
                 .printerID(costDTO.getPrinterID())
+                .additionalCosts(costDTO.getAdditonalCosts())
                 .build();
     }
     public GETOnlyCostDTO CostToGet(Cost cost){

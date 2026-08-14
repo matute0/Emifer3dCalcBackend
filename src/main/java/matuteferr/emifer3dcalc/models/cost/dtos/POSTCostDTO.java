@@ -16,6 +16,7 @@ import java.util.List;
 public class POSTCostDTO {
     private String printerID;
     private List<FilamentAmountDTO> filamentAMList;
+    private List<Integer> additonalCosts;
     private int hours;
     private int minutes;
 }
