@@ -48,8 +48,7 @@ public class CostService {
         int price = 0;
         for(FilamentAmountDTO filamentAM: filamentAmountDTOList){
             GETFilamentDTO filament = filamentService.getByID(filamentAM.getFilamentID());
-            // hacer llamado a la api de mercado libre
-            double filamentCost = ((double) filamentAM.getAmount() /1000)*600;
+            double filamentCost = ((double) filamentAM.getAmount() /1000)*filament.getPrice();
             price += ((int) Math.round(filamentCost));
         }
 

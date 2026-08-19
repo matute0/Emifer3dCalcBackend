@@ -11,6 +11,7 @@ public class FilamentMapper {
                 .colour(filamentDTO.getColour())
                 .type(filamentDTO.getType())
                 .manufacturer(filamentDTO.getManufacturer())
+                .price(filamentDTO.getPrice())
                 .build();
     }
     public FilamentDTO filamentToDTO(Filament filament){
@@ -27,6 +28,7 @@ public class FilamentMapper {
                 .colour(filament.getColour())
                 .manufacturer(filament.getManufacturer())
                 .type(filament.getType())
+                .price(filament.getPrice())
                 .build();
     }
 }

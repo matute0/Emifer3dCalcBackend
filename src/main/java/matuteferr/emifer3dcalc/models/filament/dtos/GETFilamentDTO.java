@@ -19,6 +19,7 @@ public class GETFilamentDTO {
     private String type;
     @NotBlank
     private String manufacturer;
+    private int price;
     @NotBlank
     private boolean status;
 }
