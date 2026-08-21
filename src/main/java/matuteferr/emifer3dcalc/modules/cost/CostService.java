@@ -8,7 +8,10 @@ import matuteferr.emifer3dcalc.models.cost.dtos.GETOnlyCostDTO;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTAdditionalCost;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostConfigDTO;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostDTO;
+import matuteferr.emifer3dcalc.models.filament.Filament;
+import matuteferr.emifer3dcalc.models.filament.FilamentMapper;
 import matuteferr.emifer3dcalc.models.filament.dtos.FilamentAmountDTO;
+import matuteferr.emifer3dcalc.models.filament.dtos.FilamentCostDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.GETFilamentDTO;
 import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterDTO;
 import matuteferr.emifer3dcalc.modules.filament.FilamentService;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,12 +35,15 @@ public class CostService {
     private CostMapper costMapper;
     @Autowired
     private CostConfigRepository costConfigRepository;
+    @Autowired
+    private FilamentMapper filamentMapper;
 
     public GETOnlyCostDTO calcFinalCost(POSTCostDTO postCostDTO){
         GETPrinterDTO printer = printerService.getByID(postCostDTO.getPrinterID());
         Cost cost = costMapper.POSTToCost(postCostDTO);
         POSTCostConfigDTO config = costMapper.costToDTO(costConfigRepository.findAll().get(0));
-        int filamentCost = filamentCost(postCostDTO.getFilamentAMList());
+        List<FilamentCostDTO> filamentCostList = filamentCost(postCostDTO.getFilamentAMList());
+        int filamentCost = totalFilamentCost(filamentCostList);
         int printerCost = printerCost(printer, cost.getPrintTime());
         int additionalCost = additionalCost(postCostDTO);
         cost.setFinalCost(cost.getFinalCost()
@@ -48,17 +55,24 @@ public class CostService {
         cost.setFinalCost(cost.getFinalCost()*((100 + config.getProfitPercentage())/100));
 
         costRepository.save(cost);
-        return costMapper.CostToGet(cost.getFinalCost(), cost.getAdditionalCosts(), filamentCost, printerCost);
+        return costMapper.CostToGet(cost.getFinalCost(), cost.getAdditionalCosts(), filamentCostList, printerCost);
     }
-    public int filamentCost(List<FilamentAmountDTO> filamentAmountDTOList){
+    public int totalFilamentCost(List<FilamentCostDTO> filamentCostList){
         int price = 0;
-        for(FilamentAmountDTO filamentAM: filamentAmountDTOList){
-            GETFilamentDTO filament = filamentService.getByID(filamentAM.getFilamentID());
-            double filamentCost = ((double) filamentAM.getAmount() /1000)*filament.getPrice();
-            price += ((int) Math.round(filamentCost));
+        for(FilamentCostDTO filamentCostDTO : filamentCostList){
+            price += filamentCostDTO.getFinalCost();
         }
-
         return price;
+    }
+    public List<FilamentCostDTO> filamentCost(List<FilamentAmountDTO> filamentAmountDTOList){
+        List<FilamentCostDTO> list = new ArrayList<>();
+        for(FilamentAmountDTO filamentAM: filamentAmountDTOList){
+            FilamentCostDTO filamentCostDTO = filamentMapper.filamentToCost(filamentAM);
+            GETFilamentDTO filament = filamentService.getByID(filamentAM.getFilamentID());
+            filamentCostDTO.setFinalCost(Math.round(((float) filamentAM.getAmount() /1000) *filament.getPrice()));
+            list.add(filamentCostDTO);
+        }
+        return list;
     }
     public int printerCost(GETPrinterDTO printer, Duration duration){
         double totalHoursDecimal = duration.toMinutes() / 60.0;

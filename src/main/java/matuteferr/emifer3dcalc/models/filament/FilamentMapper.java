@@ -1,5 +1,7 @@
 package matuteferr.emifer3dcalc.models.filament;
 
+import matuteferr.emifer3dcalc.models.filament.dtos.FilamentAmountDTO;
+import matuteferr.emifer3dcalc.models.filament.dtos.FilamentCostDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.FilamentDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.GETFilamentDTO;
 import org.springframework.stereotype.Component;
@@ -29,6 +31,12 @@ public class FilamentMapper {
                 .manufacturer(filament.getManufacturer())
                 .type(filament.getType())
                 .price(filament.getPrice())
+                .build();
+    }
+    public FilamentCostDTO filamentToCost(FilamentAmountDTO filamentAmountDTO){
+        return FilamentCostDTO.builder()
+                .filamentID(filamentAmountDTO.getFilamentID())
+                .amount(filamentAmountDTO.getAmount())
                 .build();
     }
 }

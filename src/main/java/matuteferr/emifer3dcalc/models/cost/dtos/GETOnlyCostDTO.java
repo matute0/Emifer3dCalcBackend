@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import matuteferr.emifer3dcalc.models.cost.addCost.AdditionalCost;
+import matuteferr.emifer3dcalc.models.filament.dtos.FilamentCostDTO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GETOnlyCostDTO {
-    public int filamentCost;
+    public List<FilamentCostDTO> filamentCosts;
     public int printerCost;
     public List<AdditionalCost> additionalCost;
     public int finalCost;
