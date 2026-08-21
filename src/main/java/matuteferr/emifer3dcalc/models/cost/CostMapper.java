@@ -6,6 +6,7 @@ import matuteferr.emifer3dcalc.models.cost.dtos.POSTAdditionalCost;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostConfigDTO;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.FilamentCostDTO;
+import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterCost;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -22,7 +23,7 @@ public class CostMapper {
                 .additionalCosts(costDTO.getAdditionalCosts())
                 .build();
     }
-    public GETOnlyCostDTO CostToGet(int finalCost, List<POSTAdditionalCost> additionalCost, List<FilamentCostDTO> filamentCost, int printerCost){
+    public GETOnlyCostDTO CostToGet(int finalCost, List<POSTAdditionalCost> additionalCost, List<FilamentCostDTO> filamentCost, GETPrinterCost printerCost){
         return GETOnlyCostDTO.builder()
                 .finalCost(finalCost)
                 .additionalCost(POSTDTOListAdd(additionalCost))

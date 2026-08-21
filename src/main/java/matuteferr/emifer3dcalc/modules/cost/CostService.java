@@ -13,6 +13,7 @@ import matuteferr.emifer3dcalc.models.filament.FilamentMapper;
 import matuteferr.emifer3dcalc.models.filament.dtos.FilamentAmountDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.FilamentCostDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.GETFilamentDTO;
+import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterCost;
 import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterDTO;
 import matuteferr.emifer3dcalc.modules.filament.FilamentService;
 import matuteferr.emifer3dcalc.modules.printer.PrinterService;
@@ -43,8 +44,13 @@ public class CostService {
         Cost cost = costMapper.POSTToCost(postCostDTO);
         POSTCostConfigDTO config = costMapper.costToDTO(costConfigRepository.findAll().get(0));
         List<FilamentCostDTO> filamentCostList = filamentCost(postCostDTO.getFilamentAMList());
+        double totalHoursDecimal = cost.getPrintTime().toMinutes() / 60.0;
+        GETPrinterCost printerCostDTO = GETPrinterCost.builder()
+                .wattsCost(getWattsCost(printer, totalHoursDecimal))
+                .wearCostPrint(getWearCost(printer, totalHoursDecimal))
+                .build();
         int filamentCost = totalFilamentCost(filamentCostList);
-        int printerCost = printerCost(printer, cost.getPrintTime());
+        int printerCost = printerCost(printer, totalHoursDecimal);
         int additionalCost = additionalCost(postCostDTO);
         cost.setFinalCost(cost.getFinalCost()
                 + filamentCost
@@ -55,7 +61,7 @@ public class CostService {
         cost.setFinalCost(cost.getFinalCost()*((100 + config.getProfitPercentage())/100));
 
         costRepository.save(cost);
-        return costMapper.CostToGet(cost.getFinalCost(), cost.getAdditionalCosts(), filamentCostList, printerCost);
+        return costMapper.CostToGet(cost.getFinalCost(), cost.getAdditionalCosts(), filamentCostList, printerCostDTO);
     }
     public int totalFilamentCost(List<FilamentCostDTO> filamentCostList){
         int price = 0;
@@ -74,9 +80,14 @@ public class CostService {
         }
         return list;
     }
-    public int printerCost(GETPrinterDTO printer, Duration duration){
-        double totalHoursDecimal = duration.toMinutes() / 60.0;
-        return (int) Math.round((((double) printer.getWatts() /1000)*totalHoursDecimal* getConfig().getKhwCost())+(((double) printer.getWearCost() /100) * totalHoursDecimal));
+    public int printerCost(GETPrinterDTO printer, double totalHoursDecimal){
+        return getWattsCost(printer, totalHoursDecimal) + getWearCost(printer, totalHoursDecimal);
+    }
+    public int getWearCost(GETPrinterDTO printer, double totalHoursDecimal){
+        return (int) Math.round((((double) printer.getWearCost() /100) * totalHoursDecimal));
+    }
+    public int getWattsCost(GETPrinterDTO printer, double totalHoursDecimal){
+        return (int) Math.round((((double) printer.getWatts() /1000)*totalHoursDecimal* getConfig().getKhwCost()));
     }
     public int additionalCost(POSTCostDTO postCostDTO){
         int price = 0;
