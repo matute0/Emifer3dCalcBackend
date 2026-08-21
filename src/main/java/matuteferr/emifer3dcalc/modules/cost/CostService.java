@@ -3,7 +3,9 @@ package matuteferr.emifer3dcalc.modules.cost;
 import matuteferr.emifer3dcalc.models.cost.Cost;
 import matuteferr.emifer3dcalc.models.cost.CostConfig;
 import matuteferr.emifer3dcalc.models.cost.CostMapper;
+import matuteferr.emifer3dcalc.models.cost.addCost.AdditionalCost;
 import matuteferr.emifer3dcalc.models.cost.dtos.GETOnlyCostDTO;
+import matuteferr.emifer3dcalc.models.cost.dtos.POSTAdditionalCost;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostConfigDTO;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.FilamentAmountDTO;
@@ -34,15 +36,19 @@ public class CostService {
         GETPrinterDTO printer = printerService.getByID(postCostDTO.getPrinterID());
         Cost cost = costMapper.POSTToCost(postCostDTO);
         POSTCostConfigDTO config = costMapper.costToDTO(costConfigRepository.findAll().get(0));
+        int filamentCost = filamentCost(postCostDTO.getFilamentAMList());
+        int printerCost = printerCost(printer, cost.getPrintTime());
+        int additionalCost = additionalCost(postCostDTO);
         cost.setFinalCost(cost.getFinalCost()
-                + filamentCost(postCostDTO.getFilamentAMList())
-                + printerCost(printer, cost.getPrintTime())
-                + additionalCost(postCostDTO));
+                + filamentCost
+                + printerCost
+                + additionalCost
+        );
 
         cost.setFinalCost(cost.getFinalCost()*((100 + config.getProfitPercentage())/100));
 
         costRepository.save(cost);
-        return costMapper.CostToGet(cost);
+        return costMapper.CostToGet(cost.getFinalCost(), cost.getAdditionalCosts(), filamentCost, printerCost);
     }
     public int filamentCost(List<FilamentAmountDTO> filamentAmountDTOList){
         int price = 0;
@@ -60,8 +66,9 @@ public class CostService {
     }
     public int additionalCost(POSTCostDTO postCostDTO){
         int price = 0;
-        for(Integer cost: postCostDTO.getAdditonalCosts()){
-            price += cost;
+        for(POSTAdditionalCost cost: postCostDTO.getAdditionalCosts()){
+            AdditionalCost tempCost = costMapper.PostAddToEntity(cost);
+            price += tempCost.getTotalCost();
         }
         return price;
     }
