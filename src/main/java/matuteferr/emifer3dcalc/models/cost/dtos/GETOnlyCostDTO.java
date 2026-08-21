@@ -18,5 +18,6 @@ public class GETOnlyCostDTO {
     public List<FilamentCostDTO> filamentCosts;
     public GETPrinterCost printerCost;
     public List<AdditionalCost> additionalCost;
+    public int profit;
     public int finalCost;
 }

@@ -58,10 +58,12 @@ public class CostService {
                 + additionalCost
         );
 
-        cost.setFinalCost(cost.getFinalCost()*((100 + config.getProfitPercentage())/100));
+        int profit = (int) Math.round(cost.getFinalCost() * ((config.getProfitPercentage()) / 100.0));
+
+        cost.setFinalCost(cost.getFinalCost() + profit);
 
         costRepository.save(cost);
-        return costMapper.CostToGet(cost.getFinalCost(), cost.getAdditionalCosts(), filamentCostList, printerCostDTO);
+        return costMapper.CostToGet(profit, cost.getFinalCost(), cost.getAdditionalCosts(), filamentCostList, printerCostDTO);
     }
     public int totalFilamentCost(List<FilamentCostDTO> filamentCostList){
         int price = 0;

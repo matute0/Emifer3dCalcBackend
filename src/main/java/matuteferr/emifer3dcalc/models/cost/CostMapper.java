@@ -23,12 +23,13 @@ public class CostMapper {
                 .additionalCosts(costDTO.getAdditionalCosts())
                 .build();
     }
-    public GETOnlyCostDTO CostToGet(int finalCost, List<POSTAdditionalCost> additionalCost, List<FilamentCostDTO> filamentCost, GETPrinterCost printerCost){
+    public GETOnlyCostDTO CostToGet(int profit, int finalCost, List<POSTAdditionalCost> additionalCost, List<FilamentCostDTO> filamentCost, GETPrinterCost printerCost){
         return GETOnlyCostDTO.builder()
                 .finalCost(finalCost)
                 .additionalCost(POSTDTOListAdd(additionalCost))
                 .filamentCosts(filamentCost)
                 .printerCost(printerCost)
+                .profit(profit)
                 .build();
     }
     public POSTCostConfigDTO costToDTO(CostConfig config){
