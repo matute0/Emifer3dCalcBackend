@@ -106,6 +106,7 @@ public class CostService {
         return costMapper.costToDTO(costConfigRepository.findAll().get(0));
     }
     public String updateConfig(POSTCostConfigDTO config){
+        costValidations.configValidate(config);
         CostConfig config1 = costConfigRepository.findAll().get(0);
         config1.setKwhCost(config.getKhwCost());
         config1.setProfitPercentage(config.getProfitPercentage());

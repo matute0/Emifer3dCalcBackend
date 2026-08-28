@@ -1,10 +1,9 @@
 package matuteferr.emifer3dcalc.modules.cost;
 
-import matuteferr.emifer3dcalc.exceptions.AdditionalCostException;
-import matuteferr.emifer3dcalc.exceptions.DurationException;
-import matuteferr.emifer3dcalc.exceptions.FilamentException;
-import matuteferr.emifer3dcalc.exceptions.PrinterNotFoundException;
+import matuteferr.emifer3dcalc.exceptions.*;
+import matuteferr.emifer3dcalc.models.cost.CostConfig;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTAdditionalCost;
+import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostConfigDTO;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.FilamentAmountDTO;
 import matuteferr.emifer3dcalc.modules.filament.FilamentRepository;
@@ -69,5 +68,10 @@ public class CostValidations {
     }
     public boolean durationValidate(int hours, int minutes){
         return hours >= 0 && minutes >= 0 && (hours > 0 || minutes > 0);
+    }
+    public void configValidate(POSTCostConfigDTO costConfigDTO){
+        if(costConfigDTO.getKhwCost() > 0 || costConfigDTO.getProfitPercentage() > 0){
+            throw new CostConfigException();
+        }
     }
 }
