@@ -35,13 +35,9 @@ public class FilamentController {
     public ResponseEntity<List<GETFilamentDTO>> getForStatus(@RequestParam boolean status){
         return ResponseEntity.ok(filamentService.getForStatus(status));
     }
-    @Operation(
-            summary = "Get filament ID",
-            description = "Searches for and returns the unique identifier of a filament based on the provided parameters."
-    )
-    @GetMapping("/getID")
-    public ResponseEntity<String> getID(@RequestParam String colour, @RequestParam String type, @RequestParam String manufacturer){
-        return ResponseEntity.ok(filamentService.getID(colour, type, manufacturer));
+    @GetMapping("/getByID")
+    public ResponseEntity<GETFilamentDTO> getByID(@RequestParam String id){
+        return ResponseEntity.ok(filamentService.getByID(id));
     }
     @Operation(
             summary = "Delete a filament",

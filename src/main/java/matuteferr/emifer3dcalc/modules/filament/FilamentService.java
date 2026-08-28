@@ -30,13 +30,6 @@ public class FilamentService {
     public List<GETFilamentDTO> getForStatus(boolean status){
         return filamentRepository.findAllByStatus(status);
     }
-    public String getID(String colour, String type, String manufacturer){
-        Optional<Filament> filament = filamentRepository.findByColourAndTypeAndManufacturer(colour, type, manufacturer);
-        if(filament.isEmpty()){
-            throw new FilamentNotFoundException();
-        }
-        return filament.get().getId();
-    }
 
     public String delete(FilamentDTO filamentDTO){
         Optional<Filament> filament = filamentRepository.findByColourAndTypeAndManufacturer(filamentDTO.getColour(), filamentDTO.getType(), filamentDTO.getManufacturer());
@@ -59,6 +52,13 @@ public class FilamentService {
         filament.get().setManufacturer(filamentDTO.getManufacturer());
         filamentRepository.save(filament.get());
         return "Filament updated";
+    }
+    public GETFilamentDTO getByID(String id){
+        Optional<Filament> filament = filamentRepository.findById(id);
+        if(filament.isEmpty()){
+            throw new FilamentNotFoundException();
+        }
+        return filamentMapper.filamentToGet(filament.get());
     }
 
 }

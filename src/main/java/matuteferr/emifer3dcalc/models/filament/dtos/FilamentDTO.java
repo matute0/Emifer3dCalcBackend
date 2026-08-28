@@ -17,4 +17,5 @@ public class FilamentDTO {
     private String type;
     @NotBlank
     private String manufacturer;
+    private int price;
 }

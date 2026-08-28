@@ -71,7 +71,10 @@ public class SecurityConfig {
                         "/swagger-resources/**",
                         "/webjars/**",
                         "/user/login",
-                        "/user/validate"
+                        "/user/validate",
+                        "/cost/calculate",
+                        "/filament/get",
+                        "/printer/list"
                         ).permitAll()
                                 .requestMatchers("/api/public/**").permitAll()
                                 .requestMatchers("/user/logout",
@@ -82,6 +85,8 @@ public class SecurityConfig {
                                         "/printer/delete",
                                         "/printer/unavailable",
                                         "/printer/update/",
+                                        "/cost/config/update",
+                                        "/cost/config/get",
                                         "/user/get").authenticated()
                         ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
