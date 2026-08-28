@@ -38,8 +38,11 @@ public class CostService {
     private CostConfigRepository costConfigRepository;
     @Autowired
     private FilamentMapper filamentMapper;
+    @Autowired
+    private CostValidations costValidations;
 
     public GETOnlyCostDTO calcFinalCost(POSTCostDTO postCostDTO){
+        costValidations.validate(postCostDTO);
         GETPrinterDTO printer = printerService.getByID(postCostDTO.getPrinterID());
         Cost cost = costMapper.POSTToCost(postCostDTO);
         POSTCostConfigDTO config = costMapper.costToDTO(costConfigRepository.findAll().get(0));

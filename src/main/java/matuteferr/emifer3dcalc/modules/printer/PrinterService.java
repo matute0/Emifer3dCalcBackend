@@ -33,7 +33,7 @@ public class PrinterService {
         return printerRepository.findByAvailable(available);
     }
     public GETPrinterDTO getByID(String id){
-        GETPrinterDTO printerDTO = printerMapper.printerToGETDTO(printerRepository.findById(id).get());
+        GETPrinterDTO printerDTO = printerMapper.printerToGETDTO(printerRepository.findById(id).orElseThrow(PrinterNotFoundException::new));
         if(printerDTO == null){
             throw new PrinterNotFoundException();
         }
