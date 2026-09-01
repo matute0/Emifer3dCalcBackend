@@ -74,7 +74,8 @@ public class SecurityConfig {
                         "/user/validate",
                         "/cost/calculate",
                         "/filament/get",
-                        "/printer/list"
+                        "/printer/list",
+                        "/printer/get/**"
                         ).permitAll()
                                 .requestMatchers("/api/public/**").permitAll()
                                 .requestMatchers("/user/logout",

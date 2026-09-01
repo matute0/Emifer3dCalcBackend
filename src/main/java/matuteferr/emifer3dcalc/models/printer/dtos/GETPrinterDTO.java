@@ -16,7 +16,7 @@ public class GETPrinterDTO {
     private String manufacturer;
     private int watts;
     private List<Double> nozzles;
-    private boolean multiColour;
+    private boolean multiColour;    
     private int wearCost;
     private boolean available;
 }

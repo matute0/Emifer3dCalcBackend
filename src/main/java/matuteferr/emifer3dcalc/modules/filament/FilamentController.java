@@ -32,7 +32,7 @@ public class FilamentController {
             description = "Retrieves a list of registered filaments from the database, allowing optional filtering via query parameters."
     )
     @GetMapping("/get")
-    public ResponseEntity<List<GETFilamentDTO>> getForStatus(@RequestParam boolean status){
+    public ResponseEntity<List<GETFilamentDTO>> getForStatus(@RequestParam(defaultValue = "true") boolean status){
         return ResponseEntity.ok(filamentService.getForStatus(status));
     }
     @GetMapping("/getByID")
