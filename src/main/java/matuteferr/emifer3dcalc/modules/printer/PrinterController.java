@@ -33,7 +33,7 @@ public class PrinterController {
             description = "Retrieves a summary list containing all the 3D printers registered in the system."
     )
     @GetMapping("/list")
-    public ResponseEntity<List<GETPrinterListDTO>> list(@RequestParam boolean available){
+    public ResponseEntity<List<GETPrinterListDTO>> list(@RequestParam(defaultValue = "true") boolean available){
         return ResponseEntity.ok(printerService.list(available));
     }
     @Operation(
