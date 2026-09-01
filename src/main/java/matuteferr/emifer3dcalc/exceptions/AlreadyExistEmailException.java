@@ -2,6 +2,6 @@ package matuteferr.emifer3dcalc.exceptions;
 
 public class AlreadyExistEmailException extends RuntimeException {
     public AlreadyExistEmailException() {
-        super("This email already exist");
+        super("Este correo ya existe");
     }
 }

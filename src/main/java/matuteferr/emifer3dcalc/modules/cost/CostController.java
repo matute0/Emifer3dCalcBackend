@@ -2,10 +2,17 @@ package matuteferr.emifer3dcalc.modules.cost;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import matuteferr.emifer3dcalc.config.ErrorResponse;
+import matuteferr.emifer3dcalc.exceptions.AdditionalCostException;
+import matuteferr.emifer3dcalc.exceptions.DurationException;
+import matuteferr.emifer3dcalc.exceptions.FilamentException;
+import matuteferr.emifer3dcalc.exceptions.PrinterNotFoundException;
 import matuteferr.emifer3dcalc.models.cost.dtos.GETOnlyCostDTO;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostConfigDTO;
 import matuteferr.emifer3dcalc.models.cost.dtos.POSTCostDTO;
+import matuteferr.emifer3dcalc.models.printer.Printer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +49,27 @@ public class CostController {
     @GetMapping("/config/get")
     public ResponseEntity<POSTCostConfigDTO> get() {
         return ResponseEntity.ok(costService.getConfig());
+    }
+
+    @ExceptionHandler(value = PrinterNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handlePrinterNotFound(PrinterNotFoundException ex){
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(value = FilamentException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleFilamentException(FilamentException ex){
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
+    @ExceptionHandler(value = AdditionalCostException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleAdditionalCost(AdditionalCostException ex){
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
+    @ExceptionHandler(value = DurationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleDurationException(DurationException ex){
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
 }
