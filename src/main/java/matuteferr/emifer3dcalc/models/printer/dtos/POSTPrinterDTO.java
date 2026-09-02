@@ -18,11 +18,6 @@ public class POSTPrinterDTO {
     private String name;
     private String manufacturer;
     private int watts;
-    private List<
-            @DecimalMin(value = "0.1")
-            @DecimalMax(value = "2.0")
-            @Digits(integer = 1, fraction = 2)
-            Double> nozzles;
     private boolean multiColour;
     private int wearCost;
 }

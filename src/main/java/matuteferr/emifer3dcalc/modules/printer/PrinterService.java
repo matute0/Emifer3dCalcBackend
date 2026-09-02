@@ -57,7 +57,6 @@ public class PrinterService {
             throw new PrinterNotFoundException();
         }
         printer.get().setName(printerDTO.getName());
-        printer.get().setNozzles(printerDTO.getNozzles());
         printer.get().setManufacturer(printerDTO.getManufacturer());
         printer.get().setWatts(printerDTO.getWatts());
         printer.get().setWearCost(printerDTO.getWearCost());
