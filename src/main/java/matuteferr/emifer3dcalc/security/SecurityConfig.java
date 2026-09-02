@@ -85,7 +85,7 @@ public class SecurityConfig {
                                         "/printer/register",
                                         "/printer/delete",
                                         "/printer/unavailable",
-                                        "/printer/update/",
+                                        "/printer/update/**",
                                         "/cost/config/update",
                                         "/cost/config/get",
                                         "/user/get").authenticated()

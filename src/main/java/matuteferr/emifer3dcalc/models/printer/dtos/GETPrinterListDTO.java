@@ -13,4 +13,6 @@ public class GETPrinterListDTO {
     private String id;
     private String name;
     private String manufacturer;
+    private int watts;
+    private boolean multiColour;
 }
