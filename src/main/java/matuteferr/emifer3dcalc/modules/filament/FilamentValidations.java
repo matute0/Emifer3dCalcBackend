@@ -22,6 +22,9 @@ public class FilamentValidations {
     private boolean validatePrice(int price){
         return price > 0;
     }
+    private boolean validateAlreadyExists2(Filament filament){
+        return filamentRepository.countByColourAndTypeAndManufacturer(filament.getColour(), filament.getType(), filament.getManufacturer()) >= 2;
+    }
 
     private boolean validateAlreadyExists(Filament filament){
         return filamentRepository.existsByColourAndTypeAndManufacturer(filament.getColour(), filament.getType(), filament.getManufacturer());
@@ -42,6 +45,23 @@ public class FilamentValidations {
         }
         if(!validatePrice(filament.getPrice())){
             throw new FilamentException();
+        }
+    }
+    public void validateUpdate(Filament filament) {
+        if (!validateColour(filament.getColour()) || filament.getColour().trim().isEmpty()) {
+            throw new ColourFormatException();
+        }
+        if (!validateType(filament.getType()) || filament.getType().trim().isEmpty()) {
+            throw new TypeFormatException();
+        }
+        if (!validateManufacturer(filament.getManufacturer()) || filament.getManufacturer().trim().isEmpty()) {
+            throw new ManufacturerFormatException();
+        }
+        if (!validatePrice(filament.getPrice())) {
+            throw new FilamentException();
+        }
+        if(validateAlreadyExists2(filament)){
+            throw new AlreadyExistFilamentException();
         }
     }
 }

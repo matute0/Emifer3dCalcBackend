@@ -16,4 +16,6 @@ public interface FilamentRepository extends MongoRepository<Filament, String> {
     List<GETFilamentDTO> findAllByStatus(boolean status);
 
     Optional<Filament> findByColourAndTypeAndManufacturer(@NotBlank String colour, @NotBlank String type, @NotBlank String manufacturer);
+
+    int countByColourAndTypeAndManufacturer(String colour, String type, String manufacturer);
 }
