@@ -48,8 +48,8 @@ public class FilamentController {
     )
     @DeleteMapping("/delete")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> delete(@RequestBody FilamentDTO filamentDTO){
-        return ResponseEntity.ok(filamentService.delete(filamentDTO));
+    public ResponseEntity<?> delete(@RequestParam String id){
+        return ResponseEntity.ok(filamentService.delete(id));
     }
     @Operation(
             summary = "Partially update a filament",

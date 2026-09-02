@@ -31,8 +31,8 @@ public class FilamentService {
         return filamentRepository.findAllByStatus(status);
     }
 
-    public String delete(FilamentDTO filamentDTO){
-        Optional<Filament> filament = filamentRepository.findByColourAndTypeAndManufacturer(filamentDTO.getColour(), filamentDTO.getType(), filamentDTO.getManufacturer());
+    public String delete(String id){
+        Optional<Filament> filament = filamentRepository.findById(id);
         if(filament.isEmpty()){
             throw new FilamentNotFoundException();
         }
@@ -46,10 +46,11 @@ public class FilamentService {
         if(filament.isEmpty()){
             throw new FilamentNotFoundException();
         }
-        filamentValidations.validate(filamentMapper.dtoToFilament(filamentDTO));
+        filamentValidations.validateUpdate(filamentMapper.dtoToFilament(filamentDTO));
         filament.get().setType(filamentDTO.getType());
         filament.get().setColour(filamentDTO.getColour());
         filament.get().setManufacturer(filamentDTO.getManufacturer());
+        filament.get().setPrice(filamentDTO.getPrice());
         filamentRepository.save(filament.get());
         return "Filament updated";
     }
