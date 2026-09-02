@@ -3,10 +3,7 @@ package matuteferr.emifer3dcalc.modules.filament;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import matuteferr.emifer3dcalc.config.ErrorResponse;
-import matuteferr.emifer3dcalc.exceptions.AlreadyExistFilamentException;
-import matuteferr.emifer3dcalc.exceptions.ColourFormatException;
-import matuteferr.emifer3dcalc.exceptions.ManufacturerFormatException;
-import matuteferr.emifer3dcalc.exceptions.TypeFormatException;
+import matuteferr.emifer3dcalc.exceptions.*;
 import matuteferr.emifer3dcalc.models.filament.dtos.FilamentDTO;
 import matuteferr.emifer3dcalc.models.filament.dtos.GETFilamentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +79,11 @@ public class FilamentController {
     @ExceptionHandler(value = AlreadyExistFilamentException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleAlreadyExistException(AlreadyExistFilamentException ex){
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
+    @ExceptionHandler(value = FilamentException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleFilamentException(FilamentException ex){
         return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
 }

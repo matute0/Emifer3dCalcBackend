@@ -53,7 +53,7 @@ public class UserService {
         cookie.setHttpOnly(true);
         cookie.setSecure(isProduction);
         cookie.setPath("/");
-        cookie.setMaxAge(5 * 60 & 60);
+        cookie.setMaxAge(24 * 60 * 60);
 
         response.addCookie(cookie);
 
