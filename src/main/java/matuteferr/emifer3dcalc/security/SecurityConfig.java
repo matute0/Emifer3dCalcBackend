@@ -80,12 +80,12 @@ public class SecurityConfig {
                                 .requestMatchers("/api/public/**").permitAll()
                                 .requestMatchers("/user/logout",
                                         "/filament/register",
-                                        "/filament/update/",
+                                        "/filament/update/**",
                                         "/filament/delete",
                                         "/printer/register",
                                         "/printer/delete",
                                         "/printer/unavailable",
-                                        "/printer/update/",
+                                        "/printer/update/**",
                                         "/cost/config/update",
                                         "/cost/config/get",
                                         "/user/get").authenticated()

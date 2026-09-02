@@ -44,12 +44,6 @@ public class PrinterService {
         printerRepository.delete(printer);
         return "Printer deleted";
     }
-    public String unavailable(String id){
-        Printer printer = printerRepository.findById(id).get();
-        printer.setAvailable(false);
-        printerRepository.save(printer);
-        return "Printer unavailable";
-    }
     public String update(POSTPrinterDTO printerDTO, String id){
         printerValidations.validation(printerDTO);
         Optional<Printer> printer = printerRepository.findById(id);
@@ -57,7 +51,6 @@ public class PrinterService {
             throw new PrinterNotFoundException();
         }
         printer.get().setName(printerDTO.getName());
-        printer.get().setNozzles(printerDTO.getNozzles());
         printer.get().setManufacturer(printerDTO.getManufacturer());
         printer.get().setWatts(printerDTO.getWatts());
         printer.get().setWearCost(printerDTO.getWearCost());

@@ -59,15 +59,6 @@ public class PrinterController {
         return ResponseEntity.ok(printerService.delete(id));
     }
     @Operation(
-            summary = "Mark a printer as unavailable",
-            description = "Updates the status of a 3D printer to indicate it is currently out of service or unavailable."
-    )
-    @PatchMapping("/unavailable")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<String> unavailable(@RequestParam String id){
-        return ResponseEntity.ok(printerService.unavailable(id));
-    }
-    @Operation(
             summary = "Update an existing printer",
             description = "Updates the details of a specific 3D printer by its unique ID."
     )

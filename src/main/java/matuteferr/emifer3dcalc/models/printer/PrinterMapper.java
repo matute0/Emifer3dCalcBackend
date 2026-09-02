@@ -11,7 +11,6 @@ public class PrinterMapper {
         return Printer.builder()
                 .name(printerDTO.getName())
                 .watts(printerDTO.getWatts())
-                .nozzles(printerDTO.getNozzles())
                 .manufacturer(printerDTO.getManufacturer())
                 .wearCost(printerDTO.getWearCost())
                 .multiColour(printerDTO.isMultiColour())
@@ -23,7 +22,6 @@ public class PrinterMapper {
                 .manufacturer(printer.getManufacturer())
                 .available(printer.isAvailable())
                 .multiColour(printer.isMultiColour())
-                .nozzles(printer.getNozzles())
                 .watts(printer.getWatts())
                 .wearCost(printer.getWearCost())
                 .build();

@@ -40,7 +40,7 @@ public class FilamentValidations {
         if(validateAlreadyExists(filament)){
             throw new AlreadyExistFilamentException();
         }
-        if(validatePrice(filament.getPrice())){
+        if(!validatePrice(filament.getPrice())){
             throw new FilamentException();
         }
     }
