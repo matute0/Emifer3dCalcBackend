@@ -3,10 +3,15 @@ package matuteferr.emifer3dcalc.modules.printer;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import matuteferr.emifer3dcalc.config.ErrorResponse;
+import matuteferr.emifer3dcalc.exceptions.ManufacturerFormatException;
+import matuteferr.emifer3dcalc.exceptions.NameFormatException;
+import matuteferr.emifer3dcalc.exceptions.WattsException;
 import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterDTO;
 import matuteferr.emifer3dcalc.models.printer.dtos.GETPrinterListDTO;
 import matuteferr.emifer3dcalc.models.printer.dtos.POSTPrinterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -70,5 +75,23 @@ public class PrinterController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> update(@PathVariable String id, @RequestBody POSTPrinterDTO printerDTO){
         return ResponseEntity.ok(printerService.update(printerDTO, id));
+    }
+
+    @ExceptionHandler(value = NameFormatException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleNameFormatException(NameFormatException ex){
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(value = ManufacturerFormatException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleManufacturerFormat(ManufacturerFormatException ex){
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(value = WattsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleWattsException(WattsException ex){
+        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
 }
