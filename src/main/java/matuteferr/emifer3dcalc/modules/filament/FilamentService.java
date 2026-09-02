@@ -50,6 +50,7 @@ public class FilamentService {
         filament.get().setType(filamentDTO.getType());
         filament.get().setColour(filamentDTO.getColour());
         filament.get().setManufacturer(filamentDTO.getManufacturer());
+        filament.get().setPrice(filamentDTO.getPrice());
         filamentRepository.save(filament.get());
         return "Filament updated";
     }
