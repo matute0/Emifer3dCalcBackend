@@ -29,8 +29,8 @@ El backend de Emifer 3D proporciona los servicios centrales para la plataforma:
 
 Con la aplicación en ejecución, puedes explorar e interactuar con todos los endpoints directamente desde tu navegador:
 
-* **Swagger UI:** `http://localhost:8080/swagger-ui.html`
-* **Especificación OpenAPI (JSON):** `http://localhost:8080/v3/api-docs`
+* **Swagger UI:** `http://[IP_DEL_SERVIDOR]:8080/swagger-ui.html`
+* **Especificación OpenAPI (JSON):** `http://[IP_DEL_SERVIDOR]:8080/v3/api-docs`
 
 ---
 
