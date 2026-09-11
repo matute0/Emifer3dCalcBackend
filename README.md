@@ -24,7 +24,37 @@ El backend de Emifer 3D proporciona los servicios centrales para la plataforma:
 * **Contenedorización:** Docker
 
 ---
+## 📁 Estructura del Proyecto
 
+```text
+src/
+├── main/
+│   ├── java/matuteferr/emifer3dcalc/
+│   │   ├── config/              # Configuración inicial, Swagger y respuestas de error
+│   │   ├── exceptions/          # Excepciones personalizadas del sistema
+│   │   ├── models/              # Modelos de datos, DTOs y Mappers
+│   │   │   ├── cost/
+│   │   │   ├── filament/
+│   │   │   ├── printer/
+│   │   │   └── user/
+│   │   ├── modules/             # Controladores, Servicios y Repositorios
+│   │   │   ├── cost/
+│   │   │   ├── filament/
+│   │   │   ├── printer/
+│   │   │   └── user/
+│   │   ├── security/            # Configuración de Spring Security y JWT
+│   │   │   └── jwt/
+│   │   └── Emifer3dCalcApplication.java
+│   └── resources/               # Propiedades y perfiles de entorno
+│       ├── application.properties
+│       ├── application-build.properties
+│       └── application-dev.properties
+├── .env
+├── .env.example
+├── Dockerfile
+└── pom.xml
+---
+```
 ## 📖 Documentación de la API (Swagger UI)
 
 Con la aplicación en ejecución, puedes explorar e interactuar con todos los endpoints directamente desde tu navegador:
