@@ -70,7 +70,7 @@ public class CostValidations {
         return hours >= 0 && minutes >= 0 && (hours > 0 || minutes > 0);
     }
     public void configValidate(POSTCostConfigDTO costConfigDTO){
-        if(costConfigDTO.getKhwCost() > 0 || costConfigDTO.getProfitPercentage() > 0){
+        if(!(costConfigDTO.getKhwCost() > 0) || !(costConfigDTO.getProfitPercentage() > 0)){
             throw new CostConfigException();
         }
     }
