@@ -53,8 +53,8 @@ src/
 ├── .env.example
 ├── Dockerfile
 └── pom.xml
----
 ```
+---
 ## 📖 Documentación de la API (Swagger UI)
 
 Con la aplicación en ejecución, puedes explorar e interactuar con todos los endpoints directamente desde tu navegador:
