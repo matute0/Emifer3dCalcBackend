@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import matuteferr.emifer3dcalc.models.user.dtos.GetUserDTO;
 import matuteferr.emifer3dcalc.models.user.dtos.POSTLoginDTO;
-import matuteferr.emifer3dcalc.models.user.dtos.POSTUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

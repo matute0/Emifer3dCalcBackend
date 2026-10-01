@@ -8,7 +8,6 @@ import matuteferr.emifer3dcalc.models.user.User;
 import matuteferr.emifer3dcalc.models.user.UserMapper;
 import matuteferr.emifer3dcalc.models.user.dtos.GetUserDTO;
 import matuteferr.emifer3dcalc.models.user.dtos.POSTLoginDTO;
-import matuteferr.emifer3dcalc.models.user.dtos.POSTUserDTO;
 import matuteferr.emifer3dcalc.security.jwt.CustomUserDetailsService;
 import matuteferr.emifer3dcalc.security.jwt.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
