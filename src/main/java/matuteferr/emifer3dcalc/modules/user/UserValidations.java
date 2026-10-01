@@ -1,7 +1,6 @@
 package matuteferr.emifer3dcalc.modules.user;
 
 import matuteferr.emifer3dcalc.exceptions.*;
-import matuteferr.emifer3dcalc.models.user.dtos.POSTUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,20 +28,4 @@ public class UserValidations {
         return userRepository.existsByEmail(email);
     }
 
-    public void validate(POSTUserDTO user){
-        if(!formatValidateUsername(user.getUsername())){
-            throw new InvalidUsernameException();
-        } else
-        if(!formatValidateEmail(user.getEmail())){
-            throw new EmailFormatException();
-        }else
-        if(!formatValidatePassword(user.getPassword())){
-            throw new PasswordFormatException();
-        } else if(alreadyExistEmail(user.getEmail())){
-            throw new AlreadyExistEmailException();
-        } else if(alreadyExistUsername(user.getUsername())){
-            throw new AlreadyExistUsernameException();
-        }
-
-    }
 }
